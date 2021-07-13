@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private List<User> users;
+    private final List<User> users;
 
     public UserService(){
         users=new LinkedList<>();
@@ -30,7 +30,7 @@ public class UserService {
 
     public Optional<User> getUserByID(int id){
       return users.stream()
-                .filter(u ->u.getId()==id)
+                .filter(u -> u.getId() == id)
                 .findFirst();
     }
 
