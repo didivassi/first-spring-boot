@@ -11,4 +11,6 @@ public class FrontPageController {
     public String frontPage(Model model){
         return "index";
     }
+
 }
+

@@ -24,6 +24,28 @@ public class UserService {
 
     }
 
+    public boolean addUser(User user){
+        boolean isValidUser=validate(user);
+
+        if(isValidUser){
+            users.add(user);
+        }
+        return isValidUser;
+    }
+
+    private boolean validate(User user) {
+        if(user == null){
+            return false;
+        }
+        if (user.getName().length()<2){
+            return false;
+        }
+        if (!user.getEmail().contains("@")){
+            return false;
+        }
+        return true;
+    }
+
     public List<User> getUsers(){
         return users;
     }

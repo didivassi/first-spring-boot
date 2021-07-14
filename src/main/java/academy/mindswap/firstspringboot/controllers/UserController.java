@@ -5,8 +5,7 @@ import academy.mindswap.firstspringboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public String getUsers(Model model  ){
+    public String getUsers(Model model){
 
         model.addAttribute("users", userService.getUsers());
         return "users";
@@ -25,11 +24,24 @@ public class UserController {
     @GetMapping("/user/{id}")
     public String getUser(@PathVariable int id, Model model) {
         Optional<User> user = userService.getUserByID(id);
+
         if(user.isEmpty()){
             return "404";
         }
+
         model.addAttribute("user", user.get());
+
         return "user";
+    }
+
+    @PostMapping(path="/user", consumes = "application/json")
+    public String createUser(@RequestBody User user, Model model){
+
+        if(userService.addUser(user)){
+         return getUsers(model);
+        }
+
+        return "404";
     }
 
     @Autowired
